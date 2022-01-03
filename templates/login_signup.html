@@ -1,0 +1,146 @@
+<!doctype html>
+
+<html lang="en">
+   <head>
+   <title>Profile Manager Cum Job Search SignUp Page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+   <style>
+
+      body {margin: 0;}
+      .header {height: 100px; width:90.1%; background-color:#417690; color:#ffc; margin-top:0%; margin-left:5%; padding: 0px;  text-align: center;}
+
+
+   </style>
+   </head>
+   <body style = "background-color: rgba(0, 255, 0, 0.02)">
+       <script>
+       function validateForm() {
+         let x = document.forms["formSignup"]["username"].value;
+            if (x == "") {
+            alert("UserName must be filled out");
+            return false;
+                        }
+         let x0 = document.forms["formSignup"]["email_id"].value;
+            if (x0 == "") {
+            alert("Email-id must be filled out");
+            return false;
+                        }
+         let x1 = document.forms["formSignup"]["password"].value;
+            if (x1 == "") {
+            alert("Password must be entered");
+            return false;
+                        }
+                                }
+
+       </script>
+       <script type="text/babel">
+
+      function tick() {
+      const element = (
+
+       <h5>{new Date().toLocaleTimeString()}.</h5>
+
+       );
+       ReactDOM.render(element, document.getElementById('root'));
+        }
+      setInterval(tick, 1000);
+
+        </script>
+      <div class="header">
+       <h2 align="center">FinancePeer.com<br>Admin and User Sign Up Page</h2>
+          <h4 style="margin-top:-1.0%" id="root"  align="center"></h4>
+      </div>
+
+    {% block content %}
+
+      {% if emailfound %}
+         <script>
+       function message9() {
+       alert("Email-id '{{email_id}}' is already in our database. Please use Sign-in to access Profile maintenance page");
+       return false; }
+       message9();
+       </script>
+
+
+      {% elif emailnotentered %}
+       <script>
+       function message11() {
+       alert("Please enter Email-id to Sign up.");
+       return false; }
+       message11();
+       </script>
+
+      {% elif passwordnotentered %}
+       <script>
+       function message12() {
+       alert("Please enter password to Sign up.");
+       return false; }
+       message12();
+       </script>
+
+      {% elif fullnamenotentered %}
+       <script>
+       function message13() {
+       alert("Please enter your Username to Sign up.");
+       return false; }
+       message13();
+       </script>
+
+
+      {% elif unknowerror %}
+       <script>
+       function message10() {
+       alert("We can't let you log in at this moment as we are facing technical difficulties. Sorry for the inconvenience. Try again later.");
+       return false; }
+       message10();
+       </script>
+
+      {% endif %}
+
+
+      <form style="border: 15px solid #417690; width: 1370px;margin-top:.5%;
+                        margin-left:5%; height: 575px;
+                        border-width: thick;"
+              id="Signup" data-value="formSignup" name = "formSignup" onsubmit="return validateForm()" action = "{% url 'loginMSU' %}"  method = "POST" >{% csrf_token %}
+
+        <div style = "max-width:770px;border: 20px solid #417690; width: 350px;
+                        margin-left:37%; height: 350px;margin-top:7.50%;
+                        border-width: thick;" >
+                     <center>
+               <label style = "margin-left:2%; margin-top:20%;" for="id_name">UserName:</label>
+               <input id="id_name" height=20px type = "text" size=30 style = "margin-left:3%; margin-top:18%;"
+                  title = "Enter UserName" name = "username" />
+            </center>
+            <center>
+               <label style = "margin-left:2%; margin-top:20%;" for="id_email">Email-id:</label>
+               <input id="id_email" height=20px type = "email" size=30 style = "margin-left:6%; margin-top:3%;"
+                  title = "Enter Your Email-id" name = "email_id" />
+            </center>
+
+            <center>
+               <label style = "margin-left:2%;"  for="id_pass">Password:</label>
+               <input id="id_pass"  height=20px type = "password" size=30 style = "margin-left:5%;margin-top:3%;"
+                  title = "Enter your password" name = "password" />
+            </center>
+
+         <br>
+         <br>
+            <center>
+               <button title="Click to Sign-Up" style = "border:2px; background-color:#417690; color:#ffc; margin-top:10%;
+                  height:30px; width:30%;margin-left:5%;" type = "submit"
+                  value = "signup" >
+                  <strong>Sign up</strong>
+               </button>
+
+            </center>
+        </div>
+
+      </form>
+
+   {% endblock content %}
+   </body>
+</html>

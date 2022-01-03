@@ -1,0 +1,206 @@
+<!doctype html>
+
+<html lang="en">
+   <head>
+   <title>Login Page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+
+   <style>
+
+      body {margin: 0;}
+      .header {height: 100px; width:89.9%; background-color:#417690; color:#ffc; margin-left:5%; padding: 0px;  text-align: center;}
+      .red {border: 1px solid #ff1111;}
+
+   </style>
+
+
+   </head>
+   <body style = "background-color: rgba(0, 255, 0, 0.02)">
+
+        <script>
+        function validateForm() {
+
+
+          let x = document.forms["formSignin"]["email_id"].value;
+            if (x == "")   {
+              alert("Email-id must be filled out");
+              return false;
+                        }
+            let x1 = document.forms["formSignin"]["password"].value;
+            if (x1 == "") {
+            alert("Password must be entered");
+            return false;
+                        }
+                                }
+       </script>
+    <script type="text/babel">
+
+      function tick() {
+      const element = (
+
+       <h5>{new Date().toLocaleTimeString()}.</h5>
+
+       );
+       ReactDOM.render(element, document.getElementById('root'));
+        }
+      setInterval(tick, 1000);
+
+    </script>
+
+      <div class="header">
+
+       <h2 align="center">FinancePeer.com<br>User and Admin Login Page</h2>
+          <h4 style="margin-top:-1.0%" id="root"  align="center"></h4>
+
+      </div>
+
+    {% block content %}
+    {% if Invalidcredent %}
+     <script>
+     function message0() {
+     alert("Email-id '{{email_id}}' or password is not in our system  or wrong. If new user, Please use Sign-up to create a Profile account");
+     return false; }
+     message0();
+    </script>
+    {% elif emaiidnotfound %}
+     <script>
+     function message1() {
+     alert("Email-id '{{email_id}}' is not in our system. Please use Sign-up to create an account");
+     return false; }
+     message1();
+      </script>
+
+     {% elif emailfound %}
+       <script>
+       function message2() {
+       alert("You can't use email-id '{{email_id}}' that is already registered with us on the Sign-up page. Registered users should use this Login-in page.");
+       return false; }
+       message2();
+       </script>
+
+      {% elif InvalidData %}
+       <script>
+       function message3() {
+       alert("Please enter valid email-id");
+       return false; }
+       message3();
+       </script>
+
+      {% elif emaiidalreadyloggedin %}
+       <script>
+       function message4() {
+       alert("Email-id already logged in");
+       return true; }
+       message4();
+       </script>
+
+      {% elif emailnotentered %}
+
+       <script>
+       function message5() {
+       alert("Please enter Email-id to Sign in.");
+       return false; }
+       message5();
+       </script>
+
+      {% elif passwordnotentered %}
+       <script>
+       function message6() {
+       alert("Please enter password to Sign in.");
+       return false; }
+       message6();
+       </script>
+
+      {% elif passwrong %}
+       <script>
+       function message7() {
+       alert("Incorrect passwrod. However, we can't reset your password at this moment. So, if you can't recollect password, go ahead and 'sign up' again with new credentials.");
+       return false; }
+       message7();
+       </script>
+
+      {% elif loggedout %}
+       <script>
+       function message8() {
+       alert("Logged out! Thanks for spending some quality time with the Web site today. Log in again.");
+       return false; }
+       message8();
+       </script>
+
+      {% elif signup %}
+       <script>
+       function message9() {
+       alert("Congrats! '{{email_id}}' on signup. Now use those credentials to 'sign in'.");
+       return false; }
+       message9();
+       </script>
+
+      {% elif unknowerror %}
+       <script>
+       function message10() {
+       alert("We can't let you log in at this moment as we are facing technical difficulties. Try again later.");
+       return false; }
+       message10();
+       </script>
+
+      {% endif %}
+
+      <section style="border: 15px solid #417690; width: 1370px;margin-top:.5%;
+                        margin-left:5%; height: 575px;
+                        border-width: thick;">
+
+            <div style = "max-width:770px;border: 20px solid #417690; width: 350px;
+                        margin-left:37%; height: 350px; margin-top:7.6%;
+                        border-width: thick;" >
+            <form id="Signin" data-value="formSignin" name = "formSignin" onsubmit="return validateForm()" action = "{% url 'loginMSI' %}"  method = "POST" >{% csrf_token %}
+
+            <center>
+               <label style = "margin-left:2%; margin-top:20%;" for="id_email">Email-id:</label>
+               <input id="id_email" height=20px type = "email" size=30 style = "margin-left:0%; margin-top:18%;"
+                  title = "Enter Your Email-id" name = "email_id" />
+            </center>
+
+         <br>
+
+            <center>
+               <label style = "margin-left:1%;"  for="id_pass">Password:</label>
+               <input id="id_pass" height=20px type = "password" size=30 style = "margin-left:0%;margin-top:3%;"
+                  title = "Enter your password" name = "password" />
+            </center>
+            <center>
+               <button title="Click to Sign-In" id="but" style = "border:2px; background-color:#417690; color:#ffc; margin-top:15%;
+                  height:30px; width:30%;margin-left:5%;" type = "submit"
+                  value = "signin" >
+                  <strong>Sign in</strong>
+               </button>
+
+            </center>
+
+
+      </form>
+         <h6 align="center">or</h6>
+      <form id="Signup" data-value="formSignup" name = "formSignup" action = "{% url 'Signup' %}"  method = "POST" >{% csrf_token %}
+
+
+            <center>
+               <button title="Click to Sign-Up" style = "border:2px; background-color:#417690; color:#ffc;  margin-top:0%;
+                  height:30px; width:30%;margin-left:5%;" type = "submit"
+                  value = "signup" >
+                  <strong>Sign up</strong>
+               </button>
+
+            </center>
+
+
+      </form>
+      </div>
+      </section>
+
+   {% endblock content %}
+   </body>
+</html>

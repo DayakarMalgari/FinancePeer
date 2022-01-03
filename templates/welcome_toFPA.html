@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+
+   <head>
+   <title>Financepeer User Data view Page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <style>
+    body {margin: 0;}
+    .header {height: 58px; width:90.1%; margin-left:5%;background-color:#417690; color:#ffc; padding: 0px;  text-align: center;}
+    ul {
+  list-style-type: none;
+  margin-top: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color:#417690; color:#ffc;
+
+  top: 0.01;
+  width: 99%;height:4.1%;
+}
+
+li {
+  float: left;
+}
+
+li {
+  display: block;
+  color: #ffc;
+  text-align: center;
+  padding: 4px 9px;
+  text-decoration: none;
+}
+
+/* Change the link color on hover */
+li :hover {
+    color: #f5dd5d; text-decoration: underline;
+}
+.txtbord { color: #417690; border-color:#f5dd5d;}
+.active {
+  background-color: #79aec8;
+}
+    h4,h2 { background-color: #417690;
+            text-color: #ffc;
+            border: 20px dotted #417690;
+            border-width: thick;
+            }
+
+    div.scroll {
+                margin:4px, 4px;
+                padding:4px;
+                height: 450px;
+                overflow-x: hidden;
+                overflow-y: auto;
+            }
+
+   </style>
+
+   </head>
+   <body style = "background-color: rgba(0, 255, 0, 0.02)">
+      <script>
+         function validateForm() {
+          let x=confirm("Do you really want to log out?");
+            if (x) {
+            return true;}
+            else { return false; }
+                                  }
+
+         function validateForm2() {
+
+         let x0 = document.forms["form"]["FP_ID"].value;
+             x1 = document.forms["form"]["FP_UserID"].value;
+             x2 = document.forms["form"]["FP_Title"].value;
+            if (x0 == '' & x1 == '' & x2 == ''  ) {
+            alert("Please use User Data Search Page.");
+            return false;
+                        }}
+
+
+      </script>
+      <script type="text/babel">
+      function tick() {
+      const element = (
+       <h4>{new Date().toLocaleTimeString()}.</h4>);
+       ReactDOM.render(element, document.getElementById('root')); }
+       setInterval(tick, 1000);
+        </script>
+
+       {% block content %}
+      <div class="header">
+       <h2  align="center">FinancePeer.com<br>View all Data Page</h2>
+      </div>
+
+        <div style="margin-left:5%;width:91%;">
+
+        <ul>
+        <li>
+        <form title="Click to upload file" name = "formUpload" action = "{% url 'uploadfile' %}"  method = "GET" >{% csrf_token %}
+               <button style = "border:0px; background-color:#417690; color:#ffc; margin-top:0%;
+                  height:15px; width:100%;margin-left:1%;" type = "submit"
+                  value = "upload" >
+                  <strong>File Upload</strong>
+               </button>
+        </form></li>
+        <li class="active">
+        <form title="Click to view all Users data" name = "formviewData" action = "{% url 'fulldataview' %}"  method = "GET" >{% csrf_token %}
+               <button style = "border:0px; background-color: #79aec8; color:#ffc; margin-top:0%;
+                  height:15px; width:100%;margin-left:1%;" type = "submit"
+                  value = "viewdata" >
+                  <strong>View all Data</strong>
+               </button>
+        </form></li>
+        <li>
+        <form title="Click to Search and view User data" name = "formUserSeach" action = "{% url 'welcome_toFP' %}"  method = "GET" >{% csrf_token %}
+               <button style = "border:0px; background-color:#417690;  color:#ffc; margin-top:0%;
+                  height:15px; width:100%;margin-left:1%;" type = "submit"
+                  value = "UserSearch" >
+                  <strong>Select User Data</strong>
+               </button>
+        </form>
+</li>
+<li style="width:64%;" ></li>
+<li> <form title="Click to Logout" name = "formLogout" enctype = "multipart/form-data" action = "{% url 'logout' %}" onsubmit="return validateForm()" method = "GET" >{% csrf_token %}
+
+
+           <button style = "border:0px; background-color:#417690; color:#ffc; margin-top:0%;
+                  height:10px; width:100%;margin-left:1%;" type = "submit"
+                  value = "Logout" >
+                  <strong>Logout</strong>
+           </button>
+
+
+
+    </form>
+</li></ul></div>
+
+
+      {% if jsonDocsnotfound %}
+         <script>
+         function message1() {
+         alert("Sorry, no user data found for your specified criteria. Modify your criteria and try again");
+         return false;
+         }
+         message1();
+         </script>
+      {% elif criterianotentered %}
+         <script>
+         function message2() {
+         alert("Please use User Data Search Page. ");
+         return false; }
+         message2()
+         </script>
+
+      {% elif toomanykeys %}
+         <script>
+         function message4() {
+         alert("SQLITE Users! You have entered too many keys, which is overloading the database. Could you please reduce keys and try again. Thank you.");
+         return false; }
+         message4()
+         </script>
+
+      {% elif unknownerror %}
+         <script>
+         function message3() {
+         alert("Unknown error has occurred, contact tech support");
+         return false;
+         }
+         message3();
+         </script>
+
+
+      {% elif Integrity %}
+         <script>
+         function message7() {
+         alert("You have allready loaded this file once before");
+         return false;
+         }
+         message7();
+         </script>
+      {% endif %}
+
+        <form name = "form" enctype = "multipart/form-data"
+              action = "{% url 'welcome_toFP' %}"
+              onsubmit="return validateForm2()"
+              method = "GET"
+               style="border: 15px solid #417690; width: 1370px;margin-top:-.5%;
+                        margin-left:5%; height: 587px;
+                        border-width: thick;">{% csrf_token %}
+            <table>
+
+
+
+              <tr><th width=10px;><h4 style = "color:#ffc;margin-left:0%;" align="left">ID:</h4></th>
+                  <th width=10px;><h4 style = "color:#ffc;margin-left:0%;" align="left">UserID:</h4></th>
+                  <th width=50px;><h4 style = "color:#ffc;margin-left:0%;" align="left">Title:</h4></th>
+            <!--  <th><h4 title="Your local time" style=" margin-top:0px; margin-left:120px; color:#ffc;" id="root" align="center"></h4></th>-->
+            </tr>
+              <tr>
+                  <td>
+                       <input id="id" type = "number" size="10" style = "height:32px;margin-left:0%;" readonly
+                        name = "FP_ID" value="{{form.FP_ID.value|default_if_none:''}}" /></td>
+
+                  <td>
+                        <input id="id_userid" type = "number" size="10"  style = "height:32px; margin-left:0%;" readonly
+                        name = "FP_UserID" value="{{form.FP_UserID.value|default_if_none:''}}" />
+                               </td>
+
+
+                  <td>
+                        <input id="id_keys" type = "text"  size="100" style = "height:32px;margin-left:0%;" readonly
+                        name = "FP_Title" value="{{form.FP_Title.value|default_if_none:''}}" /></td>
+
+                  <td>      <button style = "background-color:#417690;color:#ffc; margin-top:0%;
+                                  height:38px; width:100px;margin-left:-3%;" type = "submit"
+                                  value = "search" >
+                        <strong>Fetch Data</strong>
+                        </button></td>
+
+              </tr><tr><td></td><td></td><td>
+                        <input id="id_tsi" type = checkbox size="10px;" style = "height:10px;margin-left:0%;"
+                        name = "FP_tsi"
+                            {%  if form.FP_tsi.value == True %}checked{% endif %}  /><label style = "margin-left:0%;"  for="id_keys">Exact title search?</label></td></tr>
+          </table>
+          <div class="scroll" style = "border: 12px solid #417690; height:437px; width: 1354px;margin-top:0%;
+                        margin-left:0%; border-width: thick;" >
+
+             {% if links %}
+              <table><tr><th>
+                  <h4 style = "color:#ffc;width:400px; margin-left:450px;">Fetched {{totcount}} User Records</h4>
+              </th></tr></table>
+            {% for link in links  %}
+
+              <div style = "background-color:#d9eef0; border: 2px solid #417690; border-radius: 15px; border-color:#f5dd5d; height:240px; width: 1100px;margin-top:20px;
+                        margin-left:110px; border-width: 3px;">
+                  <table>
+                  <tr class="txtbord" style="margin-left:50px;"><td><label for="ID1" style="width:50%;">Id:</label><input class="txtbord" name="FD_ID" id="ID1" style="margin-left:60px;" align="left"  type="number" value="{{link.FP_ID}}" /></td></tr>
+                  <tr class="txtbord"><td><label for="UID1" >User Id:</label><input class="txtbord" id="UID1" name="FD_UserID" style="margin-left:25px;"  type="number"  value="{{link.FP_UserID}}" /></td></tr>
+                       <tr class="txtbord"><td><label for="TID1" >Title:</label><br>
+                           <textarea class="txtbord" id="TID1"  cols="75" rows="1" maxlength="150" name="FP_TitleS" value="{{link.FP_Title.value}}">{{link.FP_Title}}</textarea></td></tr>
+                       <tr class="txtbord"><td><label for="BID1" >Body:</label><br>
+                           <textarea class="txtbord" id="BID1" cols="75" rows="3" maxlength="500" name="FP_BodySS" value="{{link.FP_Body.value}}">{{link.FP_Body}}</textarea></td></tr>
+
+                        <br><br>
+
+              </table> </div>
+             {% endfor %}
+ {% endif %}
+
+          </div>
+        </form>
+    {% endblock content %}
+   </body>
+</html>

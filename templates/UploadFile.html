@@ -1,0 +1,212 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+<head>
+    <title>FinancePeer File Upload Page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--html, body {font-family:Helvetica, Arial, sans-serif} -->
+    <style>
+    body {margin: 0;}
+      .header {height: 58px; width:90.1%; margin-left:5%; background-color:#417690; color:#ffc; padding: 0px;  text-align: center;}
+  ul {
+  list-style-type: none;
+  margin-top: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color:#417690; color:#ffc;
+  top: 0.01;
+  width: 99%;height:4.1%;
+}
+
+
+li {
+  float: left;
+  display: block;
+  color: #ffc;
+  text-align: center;
+  padding: 4px 9px;
+  text-decoration: none;
+}
+
+/* Change the link color on hover */
+li :hover {
+  color: #f5dd5d; text-decoration: underline;
+}
+
+.active {
+  background-color: #77aec8;
+}
+
+   </style>
+</head>
+   <body style = "background-color: rgba(0, 255, 0, 0.02)">
+      <script>
+       function validateForm() {
+         let x0 = document.forms["form"]["email_id"].value;
+            if (x0 == "") {
+            alert("Enter the email id which you used to login");
+            return false;
+                        }
+                                }
+         let x1 = document.forms["form"]["JsonFile"].value;
+            if (x1 == "") {
+            alert("Choose file to upload");
+            return false;
+                        }
+                                }
+           </script>
+          <script>
+
+         function validateForm1() {
+          let x=confirm("Do you really want to log out?");
+            if (x) {
+            return true;}
+            else{ return false; }
+                        }
+       </script>
+
+      <div class="header">
+       <h2 align="center">FinancePeer.com<br>File Upload Page</h2>
+      </div>
+      {% block content %}
+
+
+      <div style="margin-left:5%;width:91%;" >
+
+        <ul>
+        <li class="active">
+        <form title="Click to upload file" name = "formQuery" action = "{% url 'uploadfile' %}"  method = "GET" >{% csrf_token %}
+
+
+               <button style = "border:0px; background-color: #77aec8; color:#ffc; margin-top:0%;
+                  height:15px; width:100%;margin-left:1%;" type = "submit"
+                  value = "upload" >
+                  <strong>File Upload</strong>
+               </button>
+
+
+        </form></li>
+        <li>
+        <form title="Click to view all Users data" name = "formviewData" action = "{% url 'fulldataview' %}"  method = "GET" >{% csrf_token %}
+               <button style = "border:0px; background-color:#417690; color:#ffc; margin-top:0%;
+                  height:15px; width:100%;margin-left:1%;" type = "submit"
+                  value = "viewdata" >
+                  <strong>View all Data</strong>
+               </button>
+        </form></li>
+        <li>
+        <form title="Click to Search and view User data" name = "formUserSearch" action = "{% url 'welcome_toFP' %}"  method = "GET" >{% csrf_token %}
+
+               <button style = "border:0px; background-color:#417690; color:#ffc; margin-top:0%;
+                  height:15px; width:100%;margin-left:1%;" type = "submit"
+                  value = "UserSearch" >
+                  <strong>Select User Data</strong>
+               </button>
+
+
+
+        </form>        </li>
+
+
+            <li style="width:64%;" ></li>
+
+<li><form title="Click to Logout" name = "formLogout" action = "{% url 'logout' %}"  onsubmit="return validateForm1()" method = "GET" >{% csrf_token %}
+
+
+               <button style = "border:0px; background-color:#417690; color:#ffc; margin-top:0%;
+                  height:15px; width:100%;margin-right:10%;" type = "submit"
+                  value = "Logout" >
+                  <strong>Logout</strong>
+               </button>
+
+
+
+    </form>
+</li>
+
+        </ul>         </div>
+       {% if emaiidnotfound %}
+         <script>
+       function message11() {
+       alert("Email-id '{{email_id}}' is not with which you login. Please use right email-id");
+       return false; }
+       message11();
+       </script>
+
+      {% elif emailnotentered %}
+         <script>
+       function message12() {
+       alert("Please enter email-id.");
+       return false; }
+       message12();
+       </script>
+      {% elif filenotselected %}
+       <script>
+       function message13() {
+       alert("Please choose file before clicking the upload button.");
+       return false; }
+       message13();
+       </script>
+
+
+      {% elif unknownerror %}
+         <script>
+       function message15() {
+       alert("We can't upload your file at this moment for technical reasons. Try later. Sorry for the inconvenience");
+       return false; }
+       message15();
+       </script>
+
+      {% elif saved %}
+         <script>
+       function message16() {
+       alert("File uploaded and loaded into details table successfully");
+       return false; }
+       message16();
+       </script>
+
+      {% elif integrity %}
+         <script>
+       function message17() {
+       alert("File uploaded, but not loaded into details table as it was already loaded once before");
+       return false; }
+       message17();
+       </script>
+
+
+      {% endif %}
+
+       <form style="border: 15px solid #417690; width: 1370px;margin-top:-.5%;
+                        margin-left:5%; height: 590px;
+                        border-width: thick;"
+               name = "form" enctype = "multipart/form-data" onsubmit="return validateForm()"
+         action = "{% url  'uploadfile'  %}" method = "POST" >{% csrf_token %}
+
+      <div style = "max-width:350px;border: 20px solid #417690; width: 350px;margin-top:7.5%;
+                        margin-left:36%; height: 350px;
+                        border-width: thick;" >
+            <center>
+               <label style = "margin-left:2%; margin-top:10%;" for="id_email">Email-id:</label>
+               <input id="id_email" type = "email" size=30
+                      style = "margin-left:0%; margin-top:20%;" value="{{form.email_id.value|default_if_none:' '}}" name = "email_id" />
+            </center>
+            <center>
+               <label style = "margin-top:25%;margin-left:2%;"  for="id_res"></label>
+               <input id="id_res" height=20px size=30 type = "file" style = "margin-left:0%;margin-top:20%;"
+                  placeholder = "Select file to upload" value="{{form.JsonFile.value}}" name = "JsonFile" />
+            </center>
+            <center>
+               <button style = "border:2px; background-color:#417690; color:#ffc; margin-top:15%;
+                  height:30px; width:23%;margin-left:5%;" type = "submit"
+                  value = "upload" >
+                  <strong>Upload</strong>
+               </button>
+            </center>
+
+      </div>
+      </form>
+   {% endblock content %}
+   </body>
+</html>
