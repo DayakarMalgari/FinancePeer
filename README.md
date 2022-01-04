@@ -4,11 +4,11 @@ Json file processing using Django/Python/JavaScript/PostgreSQL
 
 can be viewd at below url 
 
-## https://financepeer2022.herokuapp.com
+### https://financepeer2022.herokuapp.com
 and the repository can be downloaded from gitbub at https://github.com/DayakarMalgari/FinancePeer
 
 ## 1. Installation guidelines.
-# a). after downloading the repository, in settings.py file change the below data with your values.
+### a). after downloading the repository, in settings.py file change the below data with your values.
  'USER': 
 
  'PASSWORD':
@@ -20,7 +20,7 @@ and the repository can be downloaded from gitbub at https://github.com/DayakarMa
  'database':
 
  
-# b). Install all packages from the requirements.txt file using pip and run below 3 commands at command prompt from the folder where you have manage.py file and where you have access to python interpreter.
+### b). Install all packages from the requirements.txt file using pip and run below 3 commands at command prompt from the folder where you have manage.py file and where you have access to python interpreter.
      
  python manage.py makemigrations
 
@@ -30,22 +30,22 @@ and the repository can be downloaded from gitbub at https://github.com/DayakarMa
 
  then use localhost:8000 or 127.0.0.1:8000 to access the application
 
-## Application usage details.
-# Home page
-  choose either either the Admin button to use admin panel or choose user panel to use the application
-# Login page / sign-up page
+## 2. Application usage details.
+### Home page
+  click either the Admin button to use admin panel or User button to use the application
+### Login page / sign-up page
   first time users should click the sign-up button to go to sign-up page to register with username, emailid and password.
   you can mention email-id at username as well if you wish.
    Once registed, it redirects back to login page to login with newly created credentials.
-# User Data Search Page has 4 tabs. 1. File Upload 2. View All Data 3. Select User Data    and 4. logout 
-# File Upload page
+### User Data Search Page has 4 tabs. 1. File Upload 2. View All Data 3. Select User Data 4. logout 
+### File Upload page
  enter the emailid which you used to login, choose the file / json file to upload and then click upload button.
  once done you will get the confirmation. You can load the file into database only once as there is unique constraint on id.
  You need to delete all data before loading second time
-# View all Data page
+### View all Data page
  will just display all user data from the database in one shot, you just need to click the tab thats all.
- Search fields are readonly and if you click fetch data button while in that page it will request you to use User Data Search Page.
-# User Data Search Page
+ Search fields are also active, however, you will be redirected User Data Search Page if you enter proper criteria.
+### User Data Search Page
   This is the main page which has the full functionality. In the search options,
 
   a. ID Field has the top priority, if you enter any number greater than 0 in this field it will activate and, 
@@ -62,12 +62,12 @@ and the repository can be downloaded from gitbub at https://github.com/DayakarMa
 
   quaerat velit veniam amet cupiditate aut numquam ut sequi - will fetch 24 records if unchecked, and 1 record if checked
 
-# Logout doesn't have a page
+### Logout doesn't have a page
   but once clicked, asks for confirmation if you really want to log out or not. 
   If you click cancel, you will remain in the same page, and will log you out if replied ok to the confirmation.
 
 
-## Unit testing and alert message details:
+## 3. Unit testing and alert message details:
 Below are the variables used and the criteria when the message gets triggered.
 
  a. jsonDocsnotfound       - when you search on search page and there are no records to display from the database
@@ -78,7 +78,7 @@ Below are the variables used and the criteria when the message gets triggered.
 
  d. unknownerror           - any error not caught by other error messages mentioned here.
 
- e. Integrity              - you can load a json file only once, as there is a unique constraint on ID field. so, this gets triggered when trying to load multiple times. It will upload file, but will not populate fields in RDBMS table. 
+ e. Integrity              - you can load a json file only once, as there is a unique constraint on ID field. Multiple uploads will not populate fields in RDBMS table. 
 
  f. logout confirmation    - when you log out from any page, it asks for your confirmation
 
