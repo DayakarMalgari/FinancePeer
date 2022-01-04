@@ -281,7 +281,7 @@ def uploadfile(request):
 
         # Get the posted form
         MyFinancePeerJsonForm = FinancePeerJsonForm(request.POST, request.FILES)
-
+        MyFinancePeerJsonForm.email_id = request.session['username']
         if MyFinancePeerJsonForm.data.get('email_id') == '' :
 
             emailnotentered = True
@@ -432,9 +432,9 @@ def welcome_toFP(request):
     links = []
     kys = []
 
-    if request.method == "GET" :
-
-        MyFinancePeerDetailsForm = FinancePeerDetailsForm(request.GET)
+    if request.method == "POST" :
+#HERE
+        MyFinancePeerDetailsForm = FinancePeerDetailsForm(request.POST)
         FP_Title = request.GET.get('FP_Title')
         FP_UserID = request.GET.get('FP_UserID')
         FP_ID = request.GET.get('FP_ID')
@@ -580,7 +580,7 @@ def welcome_toFP(request):
         MyFinancePeerDetailsForm = FinancePeerDetailsForm(request.GET)
 
     context = {
-
+         "toomanykeys":toomanykeys,
         "totcount" : totcount,
         "unknownerror" : unknownerror,
         "jsonDocsnotfound" : jsonDocsnotfound,
@@ -796,7 +796,7 @@ def fulldataview(request):
     toomanykeys = False
     totcount = 0
     links = []
-    if request.method == "GET" :
+    if request.method == "POST" :
 
         MyFinancePeerDetailsForm = FinancePeerDetailsForm(request.GET)
 
@@ -815,16 +815,16 @@ def fulldataview(request):
             else:
                totcount = len(links)
 
-            if ((MyFinancePeerDetailsForm.data.get('FP_Title') == None) and
-                (MyFinancePeerDetailsForm.data.get('FP_UserID') == None) and
-                (MyFinancePeerDetailsForm.data.get('FP_ID') == None)):
+            #if ((MyFinancePeerDetailsForm.data.get('FP_Title') == None) and
+            #    (MyFinancePeerDetailsForm.data.get('FP_UserID') == None) and
+            #    (MyFinancePeerDetailsForm.data.get('FP_ID') == None)):
 
-                jsonDocsnotfound = False
+            #    jsonDocsnotfound = False
         except Exception as e:
             print('e11', e)
             unknownerror = True
     else:
-        print('at POST else')
+        print('at GET else')
         MyFinancePeerDetailsForm = FinancePeerDetailsForm(request.GET)
 
     context = {

@@ -39,7 +39,7 @@ li {
 li :hover {
     color: #f5dd5d; text-decoration: underline;
 }
-.txtbord { color: #417690; border: 1px solid #f5dd5d;}
+.txtbord { color: #417690; border: 1px solid #f5dd5d; border-radius: 5px;}
 .active {
   background-color: #79aec8;
 }
@@ -50,7 +50,7 @@ li :hover {
             }
 
     div.scroll {
-                margin:4px, 4p
+                margin:4px, 4px;
                 padding:4px;
                 height: 450px;
                 overflow-x: hidden;
@@ -75,12 +75,13 @@ li :hover {
          let x0 = document.forms["form"]["FP_ID"].value;
              x1 = document.forms["form"]["FP_UserID"].value;
              x2 = document.forms["form"]["FP_Title"].value;
-            if (x0 <= 0 | x1 <= 0  {
-            alert("No Negative values allowed in ID and UserID Field.");
-            return false;
-                        }
+
             if (x0 == '' & x1 == '' & x2 == ''  ) {
             alert("At least one criterion has to be entered to fetch user data");
+            return false;
+                        }
+            if (x0 < 0 | x1 < 0)  {
+            alert("No Negative values in ID and UserID Field Please.");
             return false;
                         }
                         }
@@ -110,7 +111,7 @@ li :hover {
                </button>
         </form></li>
         <li>
-        <form title="Click to view all Users data" name = "formviewData" action = "{% url 'fulldataview' %}"  method = "GET" >{% csrf_token %}
+        <form title="Click to view all Users data" name = "formviewData" action = "{% url 'fulldataview' %}"  method = "POST" >{% csrf_token %}
                <button style = "border:0px; background-color:#417690; color:#ffc; margin-top:0%;
                   height:15px; width:100%;margin-left:1%;" type = "submit"
                   value = "viewdata" >
@@ -118,7 +119,7 @@ li :hover {
                </button>
         </form></li>
         <li class="active">
-        <form title="Click to Search and view User data" name = "formUserSeach" action = "{% url 'welcome_toFP' %}"  method = "GET" >{% csrf_token %}
+        <form title="Click to Search and view User data" name = "formUserSeach" action = "{% url 'welcome_toFP' %}"  method = "POST" >{% csrf_token %}
                <button style = "border:0px; background-color: #79aec8; color:#ffc; margin-top:0%;
                   height:15px; width:100%;margin-left:1%;" type = "submit"
                   value = "UserSearch" >
@@ -127,7 +128,7 @@ li :hover {
         </form>
 </li>
 <li style="width:64%;" ></li>
-<li><form title="Click to Logout" name = "formLogout" enctype = "multipart/form-data" action = "{% url 'logout' %}" onsubmit="return validateForm()" method = "GET" >{% csrf_token %}
+<li><form title="Click to Logout" name = "formLogout" enctype = "multipart/form-data" action = "{% url 'logout' %}" onsubmit="return validateForm()" method = "POST" >{% csrf_token %}
 
 
            <button style = "border:0px; background-color:#417690; color:#ffc; margin-top:0%;
@@ -201,12 +202,12 @@ li :hover {
          </script>
       {% endif %}
 
-        <form id="f1" name = "form" enctype = "multipart/form-data"
+        <form name = "form" enctype = "multipart/form-data"
               action = "{% url 'welcome_toFP' %}"
               onsubmit="return validateForm2()"
-              method = "GET"
-               style="border: 15px solid #417690; width: 1370px;margin-top:-.5%;
-                        margin-left:5%; height: 587px;
+              method = "POST"
+              style="border: 9px solid #417690; width: 1373px;margin-top:-.5%;
+                        margin-left:5%; height: 578px;
                         border-width: thick;">{% csrf_token %}
             <table>
 
@@ -215,8 +216,8 @@ li :hover {
               <tr><th width=10px;><h4 style = "color:#ffc;margin-left:0%;" align="left">ID:</h4></th>
                   <th width=10px;><h4 style = "color:#ffc;margin-left:0%;" align="left">UserID:</h4></th>
                   <th width=50px;><h4 style = "color:#ffc;margin-left:0%;" align="left">Title:</h4></th>
-            <!--  <th><h4 title="Your local time" style=" margin-top:0px; margin-left:120px; color:#ffc;" id="root" align="center"></h4></th>-->
-            </tr>
+            <!--<th><h4 title="Your local time" style=" margin-top:0px; margin-left:120px; color:#ffc;" id="root" align="center"></h4></th>-->
+              </tr>
               <tr>
                   <td>
                        <input id="id" type = "number" size="10" style = "height:32px;margin-left:0%;"
@@ -244,8 +245,8 @@ li :hover {
                             {%  if form.FP_tsi.value == True %}checked{% endif %}  /><label style = "margin-left:0%;"  for="id_keys">Exact title search?</label>
                </td></tr>
           </table>
-          <div class="scroll" style = "border: 9px solid #417690; height:441px; width: 1365px;margin-top:0%;
-                        margin-left:-0%; border-width: thick;" >
+          <div class="scroll" style = "border: 7px solid #417690; height:425px; width: 1366px;margin-top:0%;
+                        margin-left:-.45%; border-width: thick;" >
 
              {% if links %}
               <table><tr><th>
@@ -253,15 +254,16 @@ li :hover {
               </th></tr></table>
             {% for link in links  %}
 
-              <div style = "background-color:#d9eef0; border-radius: 15px; border: 2px solid #417690; border-color:#f5dd5d; height:240px; width: 1100px;margin-top:20px;
+              <div style = "background-color:#d9eef0; border-radius: 15px; border: 2px solid #417690;
+                             border-color:#f5dd5d; height:240px; width: 1100px;margin-top:20px;
                         margin-left:110px; border-width: 3px;">
                   <table>
-                  <tr class="txtbord" style="margin-left:50px;"><td><label for="ID1" style="width:50%;">Id:</label><input form="f1" class="txtbord" name="FD_ID" id="ID1" style="margin-left:60px;" align="left" type="number" value="{{link.FP_ID}}" /></td></tr>
-                  <tr class="txtbord"><td><label for="UID1" >User Id:</label><input form="f1" class="txtbord" id="UID1" name="FD_UserID" style="margin-left:25px;"  type="number"  value="{{link.FP_UserID}}" /></td></tr>
+                  <tr class="txtbord" style="margin-left:50px;"><td><label for="ID1" style="width:50%;">Id:</label><input class="txtbord" name="FD_ID" id="ID1" style="margin-left:60px;" align="left" type="number" value="{{link.FP_ID}}" /></td></tr>
+                  <tr class="txtbord"><td><label for="UID1" >User Id:</label><input class="txtbord" id="UID1" name="FD_UserID" style="margin-left:25px;"  type="number"  value="{{link.FP_UserID}}" /></td></tr>
                        <tr class="txtbord"><td><label for="TID1" >Title:</label><br>
-                           <textarea form="f1" class="txtbord" id="TID1"  cols="75" rows="1" maxlength="150" name="FP_TitleS" value="{{link.FP_Title.value}}">{{link.FP_Title}}</textarea></td></tr>
+                           <textarea class="txtbord" id="TID1"  cols="75" rows="1" maxlength="150" name="FP_TitleS" value="{{link.FP_Title.value}}">{{link.FP_Title}}</textarea></td></tr>
                        <tr class="txtbord"><td><label for="BID1" >Body:</label><br>
-                           <textarea form="f1" class="txtbord" id="BID1" cols="75" rows="3" maxlength="500" name="FP_BodySS" value="{{link.FP_Body.value}}">{{link.FP_Body}}</textarea></td></tr>
+                           <textarea class="txtbord" id="BID1" cols="75" rows="3" maxlength="500" name="FP_BodySS" value="{{link.FP_Body.value}}">{{link.FP_Body}}</textarea></td></tr>
                       
                         <br><br>
 

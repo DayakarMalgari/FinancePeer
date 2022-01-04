@@ -89,7 +89,7 @@ li :hover {
 
         </form></li>
         <li>
-        <form title="Click to view all Users data" name = "formviewData" action = "{% url 'fulldataview' %}"  method = "GET" >{% csrf_token %}
+        <form title="Click to view all Users data" name = "formviewData" action = "{% url 'fulldataview' %}"  method = "POST" >{% csrf_token %}
                <button style = "border:0px; background-color:#417690; color:#ffc; margin-top:0%;
                   height:15px; width:100%;margin-left:1%;" type = "submit"
                   value = "viewdata" >
@@ -97,7 +97,7 @@ li :hover {
                </button>
         </form></li>
         <li>
-        <form title="Click to Search and view User data" name = "formUserSearch" action = "{% url 'welcome_toFP' %}"  method = "GET" >{% csrf_token %}
+        <form title="Click to Search and view User data" name = "formUserSearch" action = "{% url 'welcome_toFP' %}"  method = "POST" >{% csrf_token %}
 
                <button style = "border:0px; background-color:#417690; color:#ffc; margin-top:0%;
                   height:15px; width:100%;margin-left:1%;" type = "submit"
@@ -112,7 +112,7 @@ li :hover {
 
             <li style="width:64%;" ></li>
 
-<li><form title="Click to Logout" name = "formLogout" action = "{% url 'logout' %}"  onsubmit="return validateForm1()" method = "GET" >{% csrf_token %}
+<li><form title="Click to Logout" name = "formLogout" action = "{% url 'logout' %}"  onsubmit="return validateForm1()" method = "POST" >{% csrf_token %}
 
 
                <button style = "border:0px; background-color:#417690; color:#ffc; margin-top:0%;
@@ -178,13 +178,13 @@ li :hover {
 
       {% endif %}
 
-       <form style="border: 15px solid #417690; width: 1370px;margin-top:-.5%;
-                        margin-left:5%; height: 590px;
+       <form style="border: 9px solid #417690; width: 1373px;margin-top:-.5%;
+                        margin-left:5%; height: 578px;
                         border-width: thick;"
                name = "form" enctype = "multipart/form-data" onsubmit="return validateForm()"
          action = "{% url  'uploadfile'  %}" method = "POST" >{% csrf_token %}
 
-      <div style = "max-width:350px;border: 20px solid #417690; width: 350px;margin-top:7.5%;
+      <div style = "max-width:350px;border: 9px solid #417690; width: 350px;margin-top:7.5%;
                         margin-left:36%; height: 350px;
                         border-width: thick;" >
             <center>

@@ -2,7 +2,7 @@
 <html lang="en">
 
    <head>
-   <title>Financepeer User Data view Page</title>
+   <title>Financepeer View all Data Page</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
@@ -39,12 +39,12 @@ li {
 li :hover {
     color: #f5dd5d; text-decoration: underline;
 }
-.txtbord { color: #417690; border-color:#f5dd5d;}
+.txtbord { color: #417690; border: 1px solid #f5dd5d; border-radius: 5px;}
 .active {
   background-color: #79aec8;
 }
     h4,h2 { background-color: #417690;
-            text-color: #ffc;
+            color: #ffc;
             border: 20px dotted #417690;
             border-width: thick;
             }
@@ -75,9 +75,14 @@ li :hover {
              x1 = document.forms["form"]["FP_UserID"].value;
              x2 = document.forms["form"]["FP_Title"].value;
             if (x0 == '' & x1 == '' & x2 == ''  ) {
-            alert("Please use User Data Search Page.");
+            alert("Please enter some criteria to fetch user data. And, no negative values in ID and UserID field please.");
             return false;
-                        }}
+                        }
+             if (x0 < 0 | x1 < 0  ) {
+            alert("No negative values in ID and UserID field please.");
+            return false;
+                        }
+                        }
 
 
       </script>
@@ -106,7 +111,7 @@ li :hover {
                </button>
         </form></li>
         <li class="active">
-        <form title="Click to view all Users data" name = "formviewData" action = "{% url 'fulldataview' %}"  method = "GET" >{% csrf_token %}
+        <form title="Click to view all Users data" name = "formviewData" action = "{% url 'fulldataview' %}"  method = "POST" >{% csrf_token %}
                <button style = "border:0px; background-color: #79aec8; color:#ffc; margin-top:0%;
                   height:15px; width:100%;margin-left:1%;" type = "submit"
                   value = "viewdata" >
@@ -114,7 +119,7 @@ li :hover {
                </button>
         </form></li>
         <li>
-        <form title="Click to Search and view User data" name = "formUserSeach" action = "{% url 'welcome_toFP' %}"  method = "GET" >{% csrf_token %}
+        <form title="Click to Search and view User data" name = "formUserSeach" action = "{% url 'welcome_toFP' %}"  method = "POST" >{% csrf_token %}
                <button style = "border:0px; background-color:#417690;  color:#ffc; margin-top:0%;
                   height:15px; width:100%;margin-left:1%;" type = "submit"
                   value = "UserSearch" >
@@ -123,7 +128,7 @@ li :hover {
         </form>
 </li>
 <li style="width:64%;" ></li>
-<li> <form title="Click to Logout" name = "formLogout" enctype = "multipart/form-data" action = "{% url 'logout' %}" onsubmit="return validateForm()" method = "GET" >{% csrf_token %}
+<li> <form title="Click to Logout" name = "formLogout" enctype = "multipart/form-data" action = "{% url 'logout' %}" onsubmit="return validateForm()" method = "POST" >{% csrf_token %}
 
 
            <button style = "border:0px; background-color:#417690; color:#ffc; margin-top:0%;
@@ -141,7 +146,7 @@ li :hover {
       {% if jsonDocsnotfound %}
          <script>
          function message1() {
-         alert("Sorry, no user data found for your specified criteria. Modify your criteria and try again");
+         alert("There is no data in the database to display. Load the database and try again. Thank you.");
          return false;
          }
          message1();
@@ -185,9 +190,9 @@ li :hover {
         <form name = "form" enctype = "multipart/form-data"
               action = "{% url 'welcome_toFP' %}"
               onsubmit="return validateForm2()"
-              method = "GET"
-               style="border: 15px solid #417690; width: 1370px;margin-top:-.5%;
-                        margin-left:5%; height: 587px;
+              method = "POST"
+               style="border: 9px solid #417690; width: 1373px;margin-top:-.5%;
+                        margin-left:5%; height: 578px;
                         border-width: thick;">{% csrf_token %}
             <table>
 
@@ -197,20 +202,20 @@ li :hover {
                   <th width=10px;><h4 style = "color:#ffc;margin-left:0%;" align="left">UserID:</h4></th>
                   <th width=50px;><h4 style = "color:#ffc;margin-left:0%;" align="left">Title:</h4></th>
             <!--  <th><h4 title="Your local time" style=" margin-top:0px; margin-left:120px; color:#ffc;" id="root" align="center"></h4></th>-->
-            </tr>
+              </tr>
               <tr>
                   <td>
-                       <input id="id" type = "number" size="10" style = "height:32px;margin-left:0%;" readonly
+                       <input id="id" type = "number" size="10" style = "height:32px;margin-left:0%;"
                         name = "FP_ID" value="{{form.FP_ID.value|default_if_none:''}}" /></td>
 
                   <td>
-                        <input id="id_userid" type = "number" size="10"  style = "height:32px; margin-left:0%;" readonly
+                        <input id="id_userid" type = "number" size="10"  style = "height:32px; margin-left:0%;"
                         name = "FP_UserID" value="{{form.FP_UserID.value|default_if_none:''}}" />
                                </td>
 
 
                   <td>
-                        <input id="id_keys" type = "text"  size="100" style = "height:32px;margin-left:0%;" readonly
+                        <input id="id_keys" type = "text"  size="100" style = "height:32px;margin-left:0%;"
                         name = "FP_Title" value="{{form.FP_Title.value|default_if_none:''}}" /></td>
 
                   <td>      <button style = "background-color:#417690;color:#ffc; margin-top:0%;
@@ -224,8 +229,8 @@ li :hover {
                         name = "FP_tsi"
                             {%  if form.FP_tsi.value == True %}checked{% endif %}  /><label style = "margin-left:0%;"  for="id_keys">Exact title search?</label></td></tr>
           </table>
-          <div class="scroll" style = "border: 12px solid #417690; height:437px; width: 1354px;margin-top:0%;
-                        margin-left:0%; border-width: thick;" >
+          <div class="scroll" style = "border: 7px solid #417690; height:425px; width: 1366px;margin-top:0%;
+                        margin-left:-.45%; border-width: thick;" >
 
              {% if links %}
               <table><tr><th>
@@ -233,7 +238,8 @@ li :hover {
               </th></tr></table>
             {% for link in links  %}
 
-              <div style = "background-color:#d9eef0; border: 2px solid #417690; border-radius: 15px; border-color:#f5dd5d; height:240px; width: 1100px;margin-top:20px;
+              <div style = "background-color:#d9eef0; border-radius: 15px; border: 2px solid #417690;
+                             border-color:#f5dd5d; height:240px; width: 1100px;margin-top:20px;
                         margin-left:110px; border-width: 3px;">
                   <table>
                   <tr class="txtbord" style="margin-left:50px;"><td><label for="ID1" style="width:50%;">Id:</label><input class="txtbord" name="FD_ID" id="ID1" style="margin-left:60px;" align="left"  type="number" value="{{link.FP_ID}}" /></td></tr>
