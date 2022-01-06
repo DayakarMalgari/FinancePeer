@@ -266,11 +266,14 @@ from myapp.models import FinancePeerJsonTab
 
 def uploadfile(request):
     unknownerror = False
+    notrighttype = False
+    notrightformat = False
     emailnotentered = False
     filenotselected = False
     emaiidnotfound = False
     InvalidData=False
     integrity = False
+    jsoncount=0
     saved = False
     JsonFile = ' '
     JsonData = ' '
@@ -311,12 +314,18 @@ def uploadfile(request):
                 uploaded_file = request.FILES['JsonFile']
                 fs = FileSystemStorage()
                 filename = fs.save(uploaded_file.name, uploaded_file)
-                jsoncount=perform_database_load(filename) # this is where it loads the data into rdbms table
-
-                if jsoncount ==0:
-                    integrity = True
+                print('filename',filename)
+                a,b=str(filename).split('.',maxsplit=1)
+                print('a',a,'b',b)
+                if b!="json":
+                    notrighttype=True
                 else:
-                    saved = True
+                    [jsoncount,notrightformat]=perform_database_load(filename) # this is where it loads the data into rdbms table
+
+                    if jsoncount ==0:
+                        integrity = True
+                    else:
+                        saved = True
 
                 email_id = request.session['username']
                 JsonFile = MyFinancePeerJsonForm.cleaned_data["JsonFile"]
@@ -339,6 +348,9 @@ def uploadfile(request):
      'form': MyFinancePeerJsonForm,
      'unknownerror': unknownerror,
      'saved': saved,
+     'jsoncount':jsoncount,
+     'notrighttype':notrighttype,
+     'notrightformat':notrightformat,
      'integrity': integrity,
      'JsonFile': JsonFile,
      'email_id':email_id,
@@ -350,32 +362,41 @@ def uploadfile(request):
 #  view for loading uploaded json file into postgre database table
 #########################################################################################################################
 
-import json
-
-import os
 def perform_database_load(jsonfile):
+    import json
+    import os
+
+    notrightformat=False
     pathf = os.path.join('media/', jsonfile)
     with open(pathf) as f:
         data = json.load(f)
-
+    cont=[]
     jsoncount = 0
 
     try:
         for a in range(len(data)):
             fpdt = FinancePeerDetailsTab()
-            fpdt.FP_ID     = data[a]["id"]
-            fpdt.FP_UserID = data[a]["userId"]
-            fpdt.FP_Title  = data[a]["title"]
-            fpdt.FP_Body   = data[a]["body"]
+            try:
+                fpdt.FP_ID     = data[a]["id"]
+                fpdt.FP_UserID = data[a]["userId"]
+                fpdt.FP_Title  = data[a]["title"]
+                fpdt.FP_Body   = data[a]["body"]
+            except Exception as e:
 
+                print('error loading database at record: ', jsoncount, " ", e)
+                notrightformat=True
+                jsoncount = 0
+                cont = [jsoncount, notrightformat]
+                return cont
             fpdt.save()
             jsoncount+=1
     except Exception as e:
         print('error loading database at record: ',jsoncount," ",e)
         jsoncount =0
-        return jsoncount
-
-    return jsoncount
+        cont = [jsoncount, notrightformat]
+        return cont
+    cont=[jsoncount,notrightformat]
+    return cont
 
 
 #########################################################################################################################
@@ -840,3 +861,10 @@ def fulldataview(request):
     return render(request, 'welcome_toFPA.html', context)
 ########################################################################################################################
 
+def financepeer(request):
+    from django.http import HttpResponseRedirect
+    URL = 'https://www.financepeer.com'
+
+    return HttpResponseRedirect(URL)
+
+########################################################################################################################
