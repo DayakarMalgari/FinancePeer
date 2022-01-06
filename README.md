@@ -37,7 +37,7 @@ and the repository can be downloaded from gitbub at https://github.com/DayakarMa
   first time users should click the sign-up button to go to sign-up page to register with username, emailid and password.
   you can mention email-id at username as well if you wish.
    Once registed, it redirects back to login page to login with newly created credentials.
-### User Data Search Page has 4 tabs. 1. File Upload 2. View All Data 3. Select User Data 4. logout 
+### User Data Search Page has 5 tabs. 1. File Upload 2. View All Data 3. Select User Data 4. financepeer 5. logout 
 ### File Upload page
  enter the emailid which you used to login, choose the file / json file to upload and then click upload button.
  once done you will get the confirmation. You can load the file into database only once as there is unique constraint on id.
@@ -61,7 +61,8 @@ and the repository can be downloaded from gitbub at https://github.com/DayakarMa
   placeat quia et porro iste                                - will fetch 18 records if unchecked, and 1 record if checked
 
   quaerat velit veniam amet cupiditate aut numquam ut sequi - will fetch 24 records if unchecked, and 1 record if checked
-
+### financepeer 
+  just a link to financepeer.com
 ### Logout doesn't have a page
   but once clicked, asks for confirmation if you really want to log out or not. 
   If you click cancel, you will remain in the same page, and will log you out if replied ok to the confirmation.
@@ -105,5 +106,11 @@ Below are the variables used and the criteria when the message gets triggered.
  q. loggedout              - when you log out, after replying ok to log out confirmation
 
  r. signup                 - congratulating you on successful sign-up
+ 
+ s. notrighttype           - if you try to upload any file other than json this would get triggered
+ 
+ t. notrightformat         - if the uploaded json file is not in the right format this would get triggered. it expects 4 fields, of right types and names.
+ 
+ u. validation             -  if negative values are used to search users in search ID and UserID boxes, this would get triggered.
 
  
