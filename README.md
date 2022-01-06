@@ -39,30 +39,30 @@ and the repository can be downloaded from gitbub at https://github.com/DayakarMa
    Once registed, it redirects back to login page to login with newly created credentials.
 ### User Data Search Page has 5 tabs. 1. File Upload 2. View All Data 3. Select User Data 4. financepeer 5. logout 
 ### File Upload page
- enter the emailid which you used to login, choose the file / json file to upload and then click upload button.
- once done you will get the confirmation. You can load the file into database only once as there is unique constraint on id.
- You need to delete all data before loading second time
+ enter the emailid which you used to login, and choose the json file (format 4 fields - id, userID, title and body. id and userID numeric with id being unique. title and body are character fields. Names, data types should be exactly as specified here.) to upload and then click upload button. If you try uploading any file other than json , or json with different format, it will not load into the RDBMS table. once done you will get the confirmation or other messages. You can load a file into database only once as there is unique constraint on id. You need to delete all data from the table before loading second time or use a file with different id's in it.
 ### View all Data page
  will just display all user data from the database in one shot, you just need to click the tab thats all.
- Search fields are also active, however, you will be redirected User Data Search Page if you enter proper criteria.
+ Search fields are also active, however, you will be redirected to User Data Search Page on entering proper criteria and clicking the fetch button.
 ### User Data Search Page
   This is the main page which has the full functionality. In the search options,
 
   a. ID Field has the top priority, if you enter any number greater than 0 in this field it will activate and, 
   will ignore the rest 2 search criterion fields even if you enter any valid values. This criterion will fetch only one record.
 
-  b. UserID field has the second priority and will also take values greater than 0. This will get activated only if ID field is empty or 0. This criterion will fetch all records under that user.
+  b. UserID field has the second priority and will also take values greater than 0. This will get activated only if ID field is empty or 0. This criterion will fetch all records under that userID.
 
   c. Title field has the last priority, and will activate only if ID and UserID fields are empty or 0's.
   You can use this field in 2 ways; one with checkbox checked for full title search, which will fetch only one record assuming title is unique.
-  and second way is with checkbox unchecked, and in this case will fetch multiple users records whose title field contain at least one word from
+  and second way is with checkbox unchecked, and in this case will fetch multiple user records whose title field contain at least one word from
   the words in the search box. For example.
 
   placeat quia et porro iste                                - will fetch 18 records if unchecked, and 1 record if checked
 
   quaerat velit veniam amet cupiditate aut numquam ut sequi - will fetch 24 records if unchecked, and 1 record if checked
+  
 ### financepeer 
   just a link to financepeer.com
+  
 ### Logout doesn't have a page
   but once clicked, asks for confirmation if you really want to log out or not. 
   If you click cancel, you will remain in the same page, and will log you out if replied ok to the confirmation.
