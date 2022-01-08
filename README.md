@@ -39,9 +39,9 @@ and the repository can be downloaded from gitbub at https://github.com/DayakarMa
    Once registed, it redirects back to login page to login with newly created credentials.
 ### User Data Search Page has 5 tabs. 1. File Upload 2. View All Data 3. Select User Data 4. financepeer 5. logout 
 ### File Upload page
- enter the emailid which you used to login, and choose the json file (format 4 fields - id, userID, title and body. id and userID numeric with id being unique. title and body are character fields. Names, data types should be exactly as specified here.) to upload and then click upload button. If you try uploading any file other than json , or json with different format, it will not load into the RDBMS table. once done you will get the confirmation or other messages. You can load a file into database only once as there is unique constraint on id. You need to delete all data from the table before loading second time or use a file with different id's in it.
+ enter the emailid which you used to login, and choose the json file (format 4 fields - id, userID, title and body. id and userID numeric with id being unique. title and body are character fields with title unique. Names, data types and the values should be exactly as specified here.) to upload and then click upload button. If you try uploading any file other than json , or json with different format, it will not load into the RDBMS table. once done you will get the confirmation or other messages. You can load a file into database only once as there is unique constraint on id and title fields. You need to delete all data from the table before loading second time or use a file with different id's and titles in it. To see the existing max 'id' value and existing 'title' values you can use the 'View all Data' page.
 ### View all Data page
- will just display all user data from the database in one shot, you just need to click the tab thats all.
+ will just display all user data from the database in the descending 'id' order one shot, you just need to click the tab thats all.
  Search fields are also active, however, you will be redirected to User Data Search Page on entering proper criteria and clicking the fetch button.
 ### User Data Search Page
   This is the main page which has the full functionality. In the search options,
