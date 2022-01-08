@@ -8,17 +8,24 @@
    <title>Login Page</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
-    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
    <style>
-
+      html,
+      body {
+                 height: 100vh;
+            }
       body {margin: 0;}
-      .header {height: 100px; width:89.9%; background-color:#417690; color:#ffc; margin-left:5%; padding: 0px;  text-align: center;}
+      body { position:absolute; top:0; bottom:0; right:0; left:0; }
+
+      .header {height: 58px:; width:1378px; background-color:#417690; color:#ffc; margin-left:5%; padding: 0px;  text-align: center;}
+        table {width: 150%;}
+       .column {float: left; width: 33.33%; margin-top: 10vh; margin-bottom:10vh }
 
    </style>
    </head>
-   <body style = "background-color: rgba(0, 255, 0, 0.02)">
+   <body style = "background-color: #d9eef0;">
     <script type="text/babel">
 
       function tick() {
@@ -40,41 +47,43 @@
 
       </div>
 
-      <section style="border: 9px solid #417690; width: 1370px;margin-top: .5%;
-                        margin-left:5%; height: 570px;
+      <section style="border: 9px solid #417690; width: 1370px;margin-top: -1%;
+                        margin-left:5%; height: 580px;
                         border-width: thick;">
 
-            <div style = "max-width:770px;border: 9px solid #417690; width: 350px;
-                        margin-left:38%; height: 350px; margin-top:7.6%;
+
+      <div style = "max-width:770px;border: 9px solid #417690; background-color:rgba(0, 25, 0, 0.09); width: 350px;
+                        margin-left:38%; height: 350px; margin-top:7.6%;border-radius:15px;
                         border-width: thick;" >
-                <h3 title="Welcome to FinancePeer.com" align="center" style = "border:2px; background-color:#417690; color:#ffc; margin-top:20%;
+                    <h3 title="Welcome to FinancePeer.com" align="center"
+                    style = "border:2px solid #ffc; border-radius: 10px; background-color: #79aec8; color:#ffc; margin-top:20%;
                   height:45px; width:220px;margin-left:18.5%;">Welcome to <br>Financepeer.com</h3>
-                <table style="margin-top:20%"><tr><td>
-            <form title="Admin Login" style="margin-top:0%;" id="Admin" name = "formAdmin"
+                  <table >
+                  <tr>
+
+                  <td style="margin-left:-5%" class="column" align="right" >
+                  <form title="Admin Login" id="Admin" name = "formAdmin"
                   action = "{% url 'admin' %}"  method = "POST" >{% csrf_token %}
-
-
-               <button style = "border:2px; background-color:#417690; color:#ffc; margin-top:0%;
-                  height:35px; width:120px;margin-left:25%;" type = "submit"
-                  value = "admin" >
+                  <button style = "background-color: #79aec8; border:2px solid #ffc; border-radius: 5px; color:#ffc;
+                         margin-top:0; height:auto; width: 90px;margin-left:0%;" type = "submit" value = "admin" >
                   <strong>FinancePeer Admin</strong>
-               </button>
-      </form></td>
+                  </button>
+                  </form></td>
 
-      <td><form title="User Login" id="Myapp" data-value="formMyapp"
-                name = "formMyapp" action = "{% url 'loginMSI' %}"  method = "POST" >{% csrf_token %}
-            <center>
-               <button style = "border:2px; background-color:#417690; color:#ffc;  margin-top:0%;
-                  height:35px; width:120px;margin-left:50%;" type = "submit"
-                  value = "myapp" >
-                  <strong>FinancePeer User</strong>
-               </button>
+                  <td style="margin-left:10%" class="column" align="left" >
+                  <form title="User Login" id="Myapp" name = "formMyapp"
+                  action = "{% url 'loginMSI' %}"  method = "POST" >{% csrf_token %}
+                  <button style = "background-color: #79aec8; border:2px solid #ffc; border-radius: 5px; color:#ffc;
+                      margin-top:0; height:auto; width: 90px;margin-left:0%;" type = "submit" value = "myapp" >
+                  <strong>FinancePeer  User</strong>
+                  </button>
+                  </form>
+                  </td>
+                  </tr>
+                  </table>
+            </div>
 
-            </center>
-      </form></td></tr></table>
-      </div>
       </section>
-
-   {% endblock content %}
+       {% endblock content %}
    </body>
 </html>

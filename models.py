@@ -19,14 +19,14 @@ from django.utils import timezone
 
 class FinancePeerJsonTab(models.Model):
     email_id = models.EmailField(max_length=150)
-    JsonFile = models.FileField(upload_to='documents/')
+    JsonFile = models.FileField()                    #upload_to=''
     class Meta:
         db_table = "FinancePeerJsonTab"
 
 class FinancePeerDetailsTab(models.Model):
    FP_ID  = models.IntegerField(unique=True)
    FP_UserID = models.IntegerField()
-   FP_Title = models.CharField(max_length=150)
+   FP_Title = models.CharField(unique=True,max_length=150)
    FP_Body = models.TextField(max_length=500)
 
    class Meta:

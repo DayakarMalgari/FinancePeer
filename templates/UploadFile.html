@@ -1,25 +1,24 @@
 <!doctype html>
-{% load static %}
 <html lang="en">
-<head>
-    <title>FinancePeer File Upload Page</title>
+
+   <head>
+   <title>FinancePeer File Upload Page</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!--html, body {font-family:Helvetica, Arial, sans-serif} -->
+
     <style>
     body {margin: 0;}
-      .header {height: 58px; width:90.1%; margin-left:5%; background-color:#417690; color:#ffc; padding: 0px;  text-align: center;}
-  ul {
+    .header {height: 58px; width:1378px; margin-left:5%;background-color:#417690; color:#ffc; padding: 0px;  text-align: center;}
+    ul {
   list-style-type: none;
   margin-top: 0;
   padding: 0;
   overflow: hidden;
   background-color:#417690; color:#ffc;
   top: 0.01;
-  width: 99%;height:4.1%;
+  width: 1378px;height:2.1%;
 }
-
 
 li {
   float: left;
@@ -30,56 +29,75 @@ li {
   text-decoration: none;
 }
 
-/* Change the link color on hover */
-li :hover {
-  color: #f5dd5d; text-decoration: underline;
-}
 
-.active {
-  background-color: #77aec8;
+li :hover {
+    color: #f5dd5d; text-decoration: underline;
 }
+.txtbord { color: #417690; border: 2px solid #ffc;  border-radius: 5px; font-weight:bold;}
+.active {
+  background-color: #79aec8;
+}
+    h4 { background-color: #417690;
+            color: #ffc;
+            border: 20px dotted #417690;
+            border-width: thick;
+            }
+
+    div.scroll {
+                margin:4px, 4px;
+                padding:4px;
+                height: 450px;
+                overflow-x: hidden;
+                overflow-y: auto;
+            }
 
    </style>
-</head>
-   <body style = "background-color: rgba(0, 255, 0, 0.02)">
+
+   </head>
+   <body style = "background-color: #d9eef0;">
       <script>
-       function validateForm() {
-         let x0 = document.forms["form"]["email_id"].value;
+         function validateForm1() {
+          let  x=confirm("Do you really want to log out?");
+            if (x) {
+            return true;}
+            else { return false; }
+                                  }
+         </script>
+         <script>
+          function validateForm() {
+          let x0 = document.forms["form"]["email_id"].value;
             if (x0 == "") {
-            alert("Enter the email id which you used to login");
+            alert("Enter the login email id ");
             return false;
                         }
-                                }
-         let x1 = document.forms["form"]["JsonFile"].value;
+
+          let x1 = document.forms["form"]["JsonFile"].value;
             if (x1 == "") {
             alert("Choose file to upload");
             return false;
                         }
                                 }
-           </script>
-          <script>
+          </script>
 
-         function validateForm1() {
-          let x=confirm("Do you really want to log out?");
-            if (x) {
-            return true;}
-            else{ return false; }
-                        }
-       </script>
+      <script type="text/babel">
+      function tick() {
+      const element = (
+       <h4>{new Date().toLocaleTimeString()}.</h4>);
+       ReactDOM.render(element, document.getElementById('root')); }
+       setInterval(tick, 1000);
+        </script>
 
-      <div class="header">
-       <h2 align="center">FinancePeer.com<br>File Upload Page</h2>
+       {% block content %}
+       <div class="header">
+       <h2  align="center">FinancePeer.com<br>File Upload Page</h2>
+
       </div>
-      {% block content %}
 
+       <div style="margin-left:5%;width:1378px;">
 
-      <div style="margin-left:5%;width:91%;" >
-
-        <ul>
+ <ul>
         <li class="active">
-        <form title="Click to upload file" name = "formQuery" action = "{% url 'uploadfile' %}"  method = "GET" >{% csrf_token %}
-
-
+        <form title="Click to upload file" name = "formUpload" action = "{% url 'uploadfile' %}"  method = "GET" >{% csrf_token %}
                <button style = "border:0px; background-color: #77aec8; color:#ffc; margin-top:0%;
                   height:15px; width:100%;margin-left:1%;" type = "submit"
                   value = "upload" >
@@ -104,13 +122,21 @@ li :hover {
                   value = "UserSearch" >
                   <strong>Select User Data</strong>
                </button>
+        </form>
+        </li>
+        <li>
+        <form title="Click for sponsors home page" name = "formhomepage" action = "{% url 'financepeer' %}"  method = "POST" >{% csrf_token %}
+
+               <button style = "border:0px; background-color:#417690; color:#ffc; margin-top:0%;
+                  height:15px; width:100%;margin-left:1%;" type = "submit"
+                  value = "financepeer" >
+                  <strong>FinancePeer</strong>
+               </button>
+        </form>
+        </li>
 
 
-
-        </form>        </li>
-
-
-            <li style="width:64%;" ></li>
+            <li style="width:775px;" ></li>
 
 <li><form title="Click to Logout" name = "formLogout" action = "{% url 'logout' %}"  onsubmit="return validateForm1()" method = "POST" >{% csrf_token %}
 
@@ -120,28 +146,26 @@ li :hover {
                   value = "Logout" >
                   <strong>Logout</strong>
                </button>
-
-
-
     </form>
 </li>
-
-        </ul>         </div>
-       {% if emaiidnotfound %}
-         <script>
-       function message11() {
-       alert("Email-id '{{email_id}}' is not with which you login. Please use right email-id");
+</ul>
+</div>
+      {% if notrighttype %}
+       <script>
+       function message0() {
+       alert("Uploaded file is not a json file. Please upload a json with right format, right field names and proper values- File should have only 4 fields; first 2 integers, last 2 charater fields. Field names 'id','userId','title','body' (Case sensitive). 'id' and 'title' values should be unique and never been used in prior loads. For existing max 'id' and 'title' values use the 'View all Data' screen. Thank you. ");
        return false; }
-       message11();
+       message0();
        </script>
 
-      {% elif emailnotentered %}
+      {% elif notrightformat %}
          <script>
-       function message12() {
-       alert("Please enter email-id.");
+       function message0() {
+       alert("Uploaded json file is not in the right format. Please upload a json with right format, right field names and proper values- File should have only 4 fields; first 2 integers, last 2 charater fields. Field names 'id','userId','title','body' (Case sensitive). 'id' and 'title' values should be unique and never been used in prior loads. For existing max 'id' and 'title' values use the 'View all Data' screen. Thank you. ");
        return false; }
-       message12();
+       message0();
        </script>
+
       {% elif filenotselected %}
        <script>
        function message13() {
@@ -162,7 +186,7 @@ li :hover {
       {% elif saved %}
          <script>
        function message16() {
-       alert("File uploaded and loaded into details table successfully");
+       alert("File uploaded and loaded {{jsoncount}} records into details table successfully");
        return false; }
        message16();
        </script>
@@ -170,7 +194,7 @@ li :hover {
       {% elif integrity %}
          <script>
        function message17() {
-       alert("File uploaded, but not loaded into details table as it was already loaded once before");
+       alert("File uploaded, but not loaded into details table as it was already loaded once before. Note: In json file, fields 'id' and 'title' values should be unique and never been used in prior uploads. For existing max id value and existing titles use the View all screen");
        return false; }
        message17();
        </script>
@@ -178,27 +202,31 @@ li :hover {
 
       {% endif %}
 
-       <form style="border: 9px solid #417690; width: 1373px;margin-top:-.5%;
-                        margin-left:5%; height: 578px;
+      <form style="border: 9px solid #417690; width: 1370px;margin-top: -.45%;
+                        margin-left:5%; height: 580px;
                         border-width: thick;"
                name = "form" enctype = "multipart/form-data" onsubmit="return validateForm()"
          action = "{% url  'uploadfile'  %}" method = "POST" >{% csrf_token %}
 
-      <div style = "max-width:350px;border: 9px solid #417690; width: 350px;margin-top:7.5%;
-                        margin-left:36%; height: 350px;
+      <div style = "max-width:770px;border: 9px solid #417690; width: 350px;margin-top:7.6%;
+                        border-radius:15px;background-color:rgba(0, 25, 0, 0.09);
+                        margin-left:38%; height: 350px;
                         border-width: thick;" >
             <center>
                <label style = "margin-left:2%; margin-top:10%;" for="id_email">Email-id:</label>
                <input id="id_email" type = "email" size=30
-                      style = "margin-left:0%; margin-top:20%;" value="{{form.email_id.value|default_if_none:' '}}" name = "email_id" />
+                      style = "margin-left:0%; margin-top:20%;
+                              background-color: #d9eef0; border:2px solid #ffc; border-radius: 5px;"
+                      value="{{form.email_id.value|default_if_none:' '}}" name = "email_id" />
             </center>
             <center>
                <label style = "margin-top:25%;margin-left:2%;"  for="id_res"></label>
-               <input id="id_res" height=20px size=30 type = "file" style = "margin-left:0%;margin-top:20%;"
-                  placeholder = "Select file to upload" value="{{form.JsonFile.value}}" name = "JsonFile" />
+               <input id="id_res" height=20px size=30 type = "file"
+                 style = "margin-left:0%;margin-top:20%;background-color: #d9eef0; border:2px solid #ffc; border-radius: 5px;"
+                  title = "Select file to upload" value="{{form.JsonFile.value}}" name = "JsonFile" />
             </center>
             <center>
-               <button style = "border:2px; background-color:#417690; color:#ffc; margin-top:15%;
+               <button style = "border:2px solid #ffc; border-radius: 5px; background-color:#77aec8; color:#ffc; margin-top:15%;
                   height:30px; width:23%;margin-left:5%;" type = "submit"
                   value = "upload" >
                   <strong>Upload</strong>

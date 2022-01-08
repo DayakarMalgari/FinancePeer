@@ -314,10 +314,10 @@ def uploadfile(request):
                 uploaded_file = request.FILES['JsonFile']
                 fs = FileSystemStorage()
                 filename = fs.save(uploaded_file.name, uploaded_file)
-                print('filename',filename)
+
                 a,b=str(filename).split('.',maxsplit=1)
-                print('a',a,'b',b)
-                if b!="json":
+
+                if str.lower(b)!="json":
                     notrighttype=True
                 else:
                     [jsoncount,notrightformat]=perform_database_load(filename) # this is where it loads the data into rdbms table
@@ -507,7 +507,7 @@ def welcome_toFP(request):
                 tmp = MyFinancePeerDetailsForm.data.get('FP_UserID')
 
                 try:
-                    fpdtData = FinancePeerDetailsTab._default_manager.filter(FP_UserID=tmp)
+                    fpdtData = FinancePeerDetailsTab._default_manager.filter(FP_UserID=tmp).order_by('id')
                     try:
                         links.extend(fpdtData)
                     except Exception as e:
@@ -824,7 +824,7 @@ def fulldataview(request):
 
         try:
 
-            fpdtData = FinancePeerDetailsTab._default_manager.all()
+            fpdtData = FinancePeerDetailsTab._default_manager.all().order_by('-id')
             try:
                links.extend(fpdtData)
             except Exception as e:

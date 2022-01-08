@@ -5,27 +5,25 @@
    <title>Login Page</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
-    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
 
    <style>
 
       body {margin: 0;}
-      .header {height: 100px; width:89.9%; background-color:#417690; color:#ffc; margin-left:5%; padding: 0px;  text-align: center;}
-      .red {border: 1px solid #ff1111;}
+
+      .header {height: 58px:; width:1378px; background-color:#417690; color:#ffc; margin-left:5%; padding: 0px;  text-align: center;}
 
    </style>
 
 
    </head>
-   <body style = "background-color: rgba(0, 255, 0, 0.02)">
+   <body style = "background-color: #d9eef0;">
 
         <script>
         function validateForm() {
-
-
           let x = document.forms["formSignin"]["email_id"].value;
             if (x == "")   {
               alert("Email-id must be filled out");
@@ -54,7 +52,7 @@
 
       <div class="header">
 
-       <h2 align="center">FinancePeer.com<br>User and Admin Login Page</h2>
+       <h2 align="center">FinancePeer.com<br>User Login Page</h2>
           <h4 style="margin-top:-1.0%" id="root"  align="center"></h4>
 
       </div>
@@ -150,53 +148,47 @@
 
       {% endif %}
 
-      <section style="border: 9px solid #417690; width: 1370px;margin-top:.5%;
-                        margin-left:5%; height: 570px;
+      <section style="border: 9px solid #417690; width: 1370px;;margin-top:-1%;
+                        margin-left:5%; height: 580px;
                         border-width: thick;">
 
-            <div style = "max-width:770px;border: 9px solid #417690; width: 350px;
-                        margin-left:37%; height: 350px; margin-top:7.6%;
+            <div style = "max-width:770px; width: 350px; border: 9px solid #417690;  background-color:rgba(0, 25, 0, 0.09);border-radius: 15px;
+                        margin-left:38%; height: 350px; margin-top:7.6%;
                         border-width: thick;" >
             <form id="Signin" data-value="formSignin" name = "formSignin" onsubmit="return validateForm()" action = "{% url 'loginMSI' %}"  method = "POST" >{% csrf_token %}
 
-            <center>
-               <label style = "margin-left:2%; margin-top:20%;" for="id_email">Email-id:</label>
-               <input id="id_email" height=20px type = "email" size=30 style = "margin-left:0%; margin-top:18%;"
+
+               <label style = "margin-left:2%;" for="id_email">Email-id:</label>
+               <input id="id_email" height=30vh type = "email" size=30
+                      style = "margin-left:0%; margin-top:10vh;
+                      background-color: #d9eef0;border:2px solid #ffc; "
                   title = "Enter Your Email-id" name = "email_id" />
-            </center>
-
-         <br>
-
-            <center>
-               <label style = "margin-left:1%;"  for="id_pass">Password:</label>
-               <input id="id_pass" height=20px type = "password" size=30 style = "margin-left:0%;margin-top:3%;"
+                <br>
+               <label style = "margin-left:1%;margin-top:0vh;"  for="id_pass">Password:</label>
+               <input id="id_pass" height=30vh type = "password" size=30
+                      style = "margin-left:0%;margin-top:3vh;background-color: #d9eef0;border:2px solid #ffc; "
                   title = "Enter your password" name = "password" />
-            </center>
+
             <center>
-               <button title="Click to Sign-In" id="but" style = "border:2px; background-color:#417690; color:#ffc; margin-top:15%;
-                  height:30px; width:30%;margin-left:5%;" type = "submit"
+               <button title="Click to Sign-In" id="but"
+                        style = "border:2px solid #ffc; background-color: #79aec8; color:#ffc; margin-top:10vh;
+                  height:30px; width:25%;margin-left:5%;" type = "submit"
                   value = "signin" >
                   <strong>Sign in</strong>
                </button>
 
             </center>
-
-
       </form>
-         <h6 align="center">or</h6>
+                <h6 style = "margin-bottom:.5vh;width:25%; color:#417690; font-weight:bold; margin-left:45%;margin-top:3vh;">New User?</h6>
       <form id="Signup" data-value="formSignup" name = "formSignup" action = "{% url 'Signup' %}"  method = "POST" >{% csrf_token %}
-
-
             <center>
-               <button title="Click to Sign-Up" style = "border:2px; background-color:#417690; color:#ffc;  margin-top:0%;
-                  height:30px; width:30%;margin-left:5%;" type = "submit"
+               <button title="Click to Sign-Up"
+                       style = "border:2px solid #ffc; background-color: #79aec8; color:#ffc;  margin-top:-1%;
+                  height:30px; width:25%;margin-left:5%;margin-bottom:10vh;" type = "submit"
                   value = "signup" >
                   <strong>Sign up</strong>
                </button>
-
             </center>
-
-
       </form>
       </div>
       </section>
