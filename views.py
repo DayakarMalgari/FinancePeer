@@ -96,44 +96,43 @@ def loginMSI(request):
            email_id = MyLoginForm.cleaned_data["email_id"]
            password = MyLoginForm.cleaned_data["password"]
 ########################################################################################################################
-           user = authenticate(
+           try:
+               user = authenticate(
                request,
                username=email_id,
                email=email_id,
                password=password
-           )
-           if user is None:
+                )
+               if user is None:
 
-               Invalidcredent = True
-               return render(request, 'login.html', locals())
-           else:
+                   Invalidcredent = True
+                   return render(request, 'login.html', locals())
+               else:
 ########################################################################################################################
-               try:
+                   Mylogindb = loginTab._default_manager.get(email_id=MyLoginForm.data.get('email_id'))
 
-                  Mylogindb = loginTab._default_manager.get(email_id=MyLoginForm.data.get('email_id'))
-
-                  if Mylogindb.password != MyLoginForm.data.get('password'):
+                   if Mylogindb.password != MyLoginForm.data.get('password'):
 
                        passwrong = True
                        return render(request, 'login.html', locals())
-               except ObjectDoesNotExist or loginTab._default_manager.DoesNotExist:
+           except ObjectDoesNotExist or ObjDoNotExist:
 
                    emaiidnotfound = True
                    return render(request, 'login.html', locals())
-               except:
+           except:
 
                    unknowerror = True
                    return render(request, 'login.html', locals())
 
 
 
-               if request.session.has_key('username'):
+           if request.session.has_key('username'):
 
                    if request.session['username']==email_id:
                         emaiidalreadyloggedin = True
                    else:
                         request.session['username'] = email_id
-               else:
+           else:
 
                    request.session['username'] = email_id
 
@@ -204,22 +203,22 @@ def loginMSU(request):
                     emailfound = True
                     return render(request, 'login.html', locals())
 
-            except ObjectDoesNotExist or ObjDoNotExist or loginTab._default_manager.DoesNotExist:
+            except ObjectDoesNotExist or ObjDoNotExist :
 
             #############################################################################bbbbbbbbbb
-                newuser = User.objects.create_user(
+                try:
+                    newuser = User.objects.create_user(
                     username=username,
                     password=password,
                     email=email_id
-                )
-                #https://www.programink.com/django-tutorial/django-authentication.html
+                                  )
+
             ###############################################################################bbbbbbbb
-                log = loginTab()
-                log.email_id = MyLoginForm.cleaned_data["email_id"]
-                log.password = MyLoginForm.cleaned_data["password"]
-                log.username = MyLoginForm.cleaned_data["email_id"]
-                try:
-                    newuser.save()                                                  ###########bbbbbb
+                    log = loginTab()
+                    log.email_id = MyLoginForm.cleaned_data["email_id"]
+                    log.password = MyLoginForm.cleaned_data["password"]
+                    log.username = MyLoginForm.cleaned_data["email_id"]
+
                     log.save()
                     signup=True
                 except Exception as e:
@@ -238,7 +237,7 @@ def loginMSU(request):
 
         MyLoginForm = LoginForm(request.GET)
     context = {
-        'MyLoginForm': MyLoginForm,
+        'formSignin': MyLoginForm,
         'signup': signup,
         'email_id': email_id,
     }
